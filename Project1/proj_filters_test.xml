@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <ItemGroup>
+    <Filter Include="Internal\Foo">
+      <UniqueIdentifier>{3047075F-C5EA-4B6B-8BCD-1ACBC0C40060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{2C776453-F28C-48E8-A8F9-F9737BD83F6E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NoFilter.cpp" />
+    <ClCompile Include="Internal\HelloWorld.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Internal\Foo\Nested.cpp">
+      <Filter>Internal\Foo</Filter>
+    </ClCompile>
+    <ClCompile Include="Nested.h" />
+  <ClCompile Include="Main.cpp" /><ClCompile Include="test1.xml" /><ClCompile Include="proj_test.xml" /><ClCompile Include="generate-filters.py" /><ClCompile Include="proj_filters_test.xml" /><ClCompile Include="test.xml" /></ItemGroup>
+</Project>

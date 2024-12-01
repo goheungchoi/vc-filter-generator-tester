@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <ItemGroup>
+    <Filter Include="Internal\Foo">
+      <UniqueIdentifier>{18F88482-5463-492D-9D97-9D0CBA6450C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{F5221A9C-5C66-4B1F-AFD6-A9B7D824FB51}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileName.cpp">
+    </ClCompile>
+    <ClCompile Include="Internal\HelloWorld.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="NoFilter.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Nested.h" />
+    <ClCompile Include="Internal\Foo\Nested.cpp">
+      <Filter>Internal\Foo</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
