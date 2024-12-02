@@ -34,5 +34,11 @@
 		<ClCompile Include="Internal\HelloWorld.cpp">
 			<Filter>Internal</Filter>
 		</ClCompile>
+		<ClInclude Include="Internal\HelloWorld.h">
+			<Filter>Internal</Filter>
+		</ClInclude>
+		<ClInclude Include="Internal\Foo\Nested.h">
+			<Filter>Internal\Foo</Filter>
+		</ClInclude>
 	</ItemGroup>
 </Project>

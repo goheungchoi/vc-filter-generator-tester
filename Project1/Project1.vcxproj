@@ -150,7 +150,9 @@
 	<ItemGroup>
 		<ClCompile Include="FileName.cpp" />
 		<ClCompile Include="Internal\Foo\Nested.cpp" />
+		<ClInclude Include="Internal\Foo\Nested.h" />
 		<ClCompile Include="Internal\HelloWorld.cpp" />
+		<ClInclude Include="Internal\HelloWorld.h" />
 		<ClCompile Include="Main.cpp" />
 		<ClInclude Include="Nested.h" />
 		<ClCompile Include="NoFilter.cpp" />
