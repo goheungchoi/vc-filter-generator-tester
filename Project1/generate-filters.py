@@ -183,8 +183,16 @@ def main():
           filter_elem.text = value
   
   for new_compile_target_path in new_compile_target_paths:
-    elem = ET.Element("ClCompile")
-    elem.set("Include", new_compile_target_path)
+    if new_compile_target_path.endswith((".c", ".cc", ".cpp")):
+      elem = ET.Element("ClCompile")
+      elem.set("Include", new_compile_target_path)
+    elif new_compile_target_path.endswith((".h", ".hpp")):
+      elem = ET.Element("ClInclude")
+      elem.set("Include", new_compile_target_path)
+    else:
+      elem = ET.Element("None")
+      elem.set("Include", new_compile_target_path)
+
     if actual_compile_targets[new_compile_target_path] != None:
       filter = ET.SubElement(elem, "Filter")
       filter.text = actual_compile_targets[new_compile_target_path]

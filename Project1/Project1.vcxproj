@@ -121,6 +121,9 @@
 			<SubSystem>Console</SubSystem>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 		</Link>
+		<PreBuildEvent>
+			<Command>py generate-filters.py</Command>
+		</PreBuildEvent>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 		<ClCompile>
@@ -137,6 +140,9 @@
 			<OptimizeReferences>true</OptimizeReferences>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 		</Link>
+		<PreBuildEvent>
+			<Command>py generate-filters.py</Command>
+		</PreBuildEvent>
 	</ItemDefinitionGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 	<ImportGroup Label="ExtensionTargets">
@@ -149,6 +155,8 @@
 		<ClInclude Include="Nested.h" />
 		<ClCompile Include="NoFilter.cpp" />
 		<ClCompile Include="Test.cpp" />
+		<ClCompile Include="Test\TestFile.cpp" />
+		<ClInclude Include="Test\TestFile.h" />
 		<None Include="generate-filters.py" />
 		<None Include="proj_filters_test.xml" />
 		<None Include="proj_test.xml" />
