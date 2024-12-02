@@ -9,11 +9,11 @@ import re
 namespace = 'http://schemas.microsoft.com/developer/msbuild/2003'
 ET.register_namespace('', namespace)
 
-ignores: set[str] = set({".vs", "x86", "x64", "out", "[Bb]uild", "[Dd]ebug", "[Rr]elease", "*.vcxproj", "*.vcxproj.filters", "*.vcxproj.user"})
+ignores: set[str] = set({r"\.vs", r"x86", r"x64", r"out", r"[Bb]uild", r"[Dd]ebug", r"[Rr]elease", r".*\.vcxproj", r".*\.vcxproj.filters", r".*\.vcxproj.user"})
 
 def convert_to_regex(set: set[str]) -> str:
     # Escape special regex characters and join with '|'
-    regex = '|'.join(re.escape(pattern).replace(r'\*', '.*') for pattern in set)
+    regex = '|'.join(set)
     return regex
 
 def find_vcx_project(dir:str):
@@ -204,7 +204,7 @@ def main():
   
   # Add new targets
   new_item_group = ET.Element("ItemGroup")
-  for compile_target_path in actual_compile_target_paths:
+  for compile_target_path in sorted(actual_compile_target_paths):
     if compile_target_path.endswith((".c", ".cc", ".cpp")):
       elem = ET.SubElement(new_item_group, "ClCompile")
       elem.set("Include", compile_target_path)
@@ -217,6 +217,9 @@ def main():
 
   proj_xml.getroot().append(new_item_group)
 
+  # Output results
+  ET.indent(proj_xml, space="\t", level=0)
+  ET.indent(proj_filters_xml, space="\t", level=0)
   proj_xml.write(proj_file, 'utf-8', True)
   proj_filters_xml.write(proj_filters_file, 'utf-8', True)
 
