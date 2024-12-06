@@ -1,6 +1,7 @@
 import os
 import sys
 import uuid
+import copy
 import argparse
 import xml.etree.ElementTree as ET
 import re
@@ -119,6 +120,9 @@ def main():
     proj_xml = ET.parse(proj_file)
     proj_filters_xml = open_vc_filter_xml(proj_filters_file)
 
+    original_proj_xml = copy.deepcopy(proj_xml)
+    original_proj_filters_xml = copy.deepcopy(proj_filters_xml)
+
     namespace = {"ns": "http://schemas.microsoft.com/developer/msbuild/2003"}
     root = proj_filters_xml.getroot()
 
@@ -193,6 +197,7 @@ def main():
     # print("new_compile_target_paths", new_compile_target_paths)
     # print()
 
+    # Remove non-existing files
     unnecessary_compile_targets = compile_target_paths.difference(
         existing_compile_target_paths
     )
@@ -275,12 +280,27 @@ def main():
             elem.set("Include", compile_target_path)
 
     proj_xml.getroot().append(new_item_group)
+    
+    ET.indent(proj_xml, space="\t", level=0)
+    ET.indent(proj_filters_xml, space="\t", level=0)
+    ET.indent(original_proj_xml, space="\t", level=0)
+    ET.indent(original_proj_filters_xml, space="\t", level=0)
 
+    diff = ET.tostring(original_proj_xml.getroot()) == ET.tostring(proj_xml.getroot())
+    print(diff)
+    diff2 = ET.tostring(original_proj_filters_xml.getroot()) == ET.tostring(proj_filters_xml.getroot())
+    print(diff2)
+
+    if ET.tostring(original_proj_xml.getroot()) == ET.tostring(proj_xml.getroot()) and ET.tostring(original_proj_filters_xml.getroot()) == ET.tostring(proj_filters_xml.getroot()):
+        print("No changes detected.")
+        return
+    
     # Output results
     ET.indent(proj_xml, space="\t", level=0)
     ET.indent(proj_filters_xml, space="\t", level=0)
     proj_xml.write(proj_file, "utf-8", True)
     proj_filters_xml.write(proj_filters_file, "utf-8", True)
+    print("Filter generation finished.")
 
     # proj_xml.write('proj_test.xml', 'utf-8', True)
     # proj_filters_xml.write('proj_filters_test.xml', 'utf-8', True)
